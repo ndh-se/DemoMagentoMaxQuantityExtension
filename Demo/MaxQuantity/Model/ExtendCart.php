@@ -38,7 +38,7 @@ class ExtendCart extends \Magento\Checkout\Model\Cart
 			}
 		}
 			
-        return parent::addProduct($productInfo, $requestInfo);
+        	return parent::addProduct($productInfo, $requestInfo);
     }
 	
 	public function updateItem($itemId, $requestInfo = null, $updatingParams = null)
@@ -66,9 +66,9 @@ class ExtendCart extends \Magento\Checkout\Model\Cart
 	public function updateItems($data) {
 		foreach ($data as $itemId => $itemInfo) {
 			$qty = isset($itemInfo['qty']) ? (double)$itemInfo['qty'] : false;
-            if ($qty > 0) {
+            		if ($qty > 0) {
 				$item = $this->getQuote()->getItemById($itemId);
-                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 				$product = $objectManager->get('Magento\Catalog\Model\Product')->load($item->getProductId());
 				if(!$this->hasMaxQuantity($product)) continue;
 				$productMaxQty = (int)$product->getData('max_qty');
@@ -77,7 +77,7 @@ class ExtendCart extends \Magento\Checkout\Model\Cart
 					$message = 'You can only buy this product '.$productMaxQty.($productMaxQty>1?' times':' time');
 					throw new \Magento\Framework\Exception\LocalizedException(__($message));
 				}
-            }
+            		}
 		}
 		return parent::updateItems($data);
 	}
@@ -85,17 +85,16 @@ class ExtendCart extends \Magento\Checkout\Model\Cart
 	public function addProductsByIds($productIds) {
 		if (!empty($productIds)) {
 			foreach ($productIds as $productId) {
+                		$productId = (int)$productId;
+                		if (!$productId) {
+                    			continue;
+                		}
 				
-                $productId = (int)$productId;
-                if (!$productId) {
-                    continue;
-                }
-				
-                $product = $this->_getProduct($productId);
+                		$product = $this->_getProduct($productId);
 				if(!$this->hasMaxQuantity($product)) continue;
 				$cartItems = $this->getItems();
 				
-                foreach($cartItems as $item) {
+                		foreach($cartItems as $item) {
 					$productMaxQty = (int)$product->getData('max_qty');
 					if($item->getQty() > $productMaxQty
 							&& $item->getProductId() == $product->getId()) {
@@ -103,7 +102,7 @@ class ExtendCart extends \Magento\Checkout\Model\Cart
 						throw new \Magento\Framework\Exception\LocalizedException(__($message));
 					}
 				}
-            }
+          		}
 		}
 	}
 }
