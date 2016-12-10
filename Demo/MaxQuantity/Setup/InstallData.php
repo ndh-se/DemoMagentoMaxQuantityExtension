@@ -21,8 +21,8 @@ class InstallData implements InstallDataInterface
 		//$setup->startSetup();
         $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
 
-		$attrCode = 'max_qty';
-		$attrLabel = 'Max Quantity';
+	$attrCode = 'max_qty';
+	$attrLabel = 'Max Quantity';
 		
         $eavSetup->addAttribute(
             \Magento\Catalog\Model\Product::ENTITY,
@@ -49,26 +49,21 @@ class InstallData implements InstallDataInterface
             ]
         );
 		
-		$attrData = array(
-			'max_qty'=> -1,
-		);
+	$attrData = array(
+		'max_qty'=> -1,
+	);
 		
-		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		$productObject = $objectManager->get('Magento\Catalog\Model\Product');
-		$productIds = $productObject->getCollection()->getAllIds();
-		$productActionObject = $objectManager->get('Magento\Catalog\Model\Product\Action');
-		$storeId  = 1;
-		
-		//$productModel = new \Magento\Catalog\Model\Product;
-		//$productActionModel = new \Magento\Catalog\Model\Product\Action;
-		//$productIds = \Magento\Catalog\Model\Product::getCollection()->getAllIds();
-		
-		//\Magento\Catalog\Model\Product\Action::updateAttributes(
-		$productActionObject->updateAttributes(
-			$productIds, 
-			$attrData,
-			$storeId
-		);
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$productObject = $objectManager->get('Magento\Catalog\Model\Product');
+	$productIds = $productObject->getCollection()->getAllIds();
+	$productActionObject = $objectManager->get('Magento\Catalog\Model\Product\Action');
+	$storeId  = 1;
+
+	$productActionObject->updateAttributes(
+		$productIds, 
+		$attrData,
+		$storeId
+	);
 		//$setup->endSetup();
     }
 }
