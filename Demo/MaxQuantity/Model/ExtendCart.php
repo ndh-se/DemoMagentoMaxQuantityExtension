@@ -9,7 +9,7 @@ namespace Demo\MaxQuantity\Model;
 class ExtendCart extends \Magento\Checkout\Model\Cart
 {
 	private function hasMaxQuantity($product) {
-		if($product->getData('max_qty') == -1) {
+		if($product->getData('max_qty') < 1) {
 			return false;
 		}
 		return true;
